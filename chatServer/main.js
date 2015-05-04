@@ -23,6 +23,9 @@ io.sockets.on('connection', function(socket) {
 	if (socket.id in users){
 		 nam = users[socket.id];
 	}
+	//added to write message into file for later use
+	//var util = require('./util');
+	writeToFile(nam,data["message"]);
 	console.log(nam);
         io.sockets.emit("message_to_client",{ message: data["message"],name: nam});
     });
@@ -43,4 +46,14 @@ io.sockets.on('connection', function(socket) {
 });
 
 
+//This function is used for write text into file
+//module.exports = writeToFile
+function writeToFile(name,chatText){
+        var fs = require('fs');
+        fs.appendFile("/ajay/chatfile/chat.txt", name+":"+chatText, function(err){
+	if(err){
+		console.log(err);
+	}	
+});
+}
 

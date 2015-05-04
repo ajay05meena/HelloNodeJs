@@ -1,0 +1,11 @@
+div#startChat{
+	width:800px;
+	margin:0px auto;
+	background: #FFFFFF;
+	padding:0px;
+}
+div#chatlog{
+	width:800px;
+	padding-top:100px;
+	background:yellow;
+}

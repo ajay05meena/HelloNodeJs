@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+        <head>
+		<title>My CHat APp </title>
+        	<link rel=StyleSheet href="client.css" type="text/css">
+		<script src="/socket.io/socket.io.js"></script>
+                <script type="text/javascript">
+                        var socketio = io.connect("192.168.175.131:8000");
+
+                        socketio.on("message_to_client", function(data) {
+                                document.getElementById("chatlog").innerHTML = ("<hr/><b>" + data['name'] + " </b>: " + data['message'] + document.getElementById("chatlog").innerHTML);
+                        });
+                        socketio.on("user_disconnected", function(data){
+				document.getElemetById("chatlog").innerHTML = ("<hr/> " + data[left] + "left" + document.getElementById("chatlog").innerHTML);
+			});
+                        socketio.on("message_to_client_username", function(data){
+				document.getElementById("chatlog").innerHTML = ("<hr/> new user joined : " + data['name']+ document.getElementById("chatlog").innerHTML);
+			});
+                         function sendMessage() {
+                                var msg = document.getElementById("message_input").value;
+                                socketio.emit("message_to_server", { message : msg});
+			
+                        }
+			function setUserName(){
+				var nam = document.getElementById("username").value;
+				socketio.emit("username_to_client",{name : nam});
+				document.getElementById("startChat").innerHTML = ('<input type="text" id = "message_input"/> <button onclick="sendMessage()"> send Message</button>')
+}
+                </script>
+        </head>
+        <body>
+                <div id = "startChat">
+                	<input type = "text" id = "username"/>
+               	 	<button onclick = "setUserName()"> set Name </button>
+		</div>
+               
+                <div id="chatlog"></div>
+        </body>
+</html>
+
+
